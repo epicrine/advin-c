@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* 
+/*
  * get_string: provides string input to the user safely. The safety
  * is ensured by dynamically allocating memory as we move ahead and
  * checking if there is enough memory to allocate otherwise return
@@ -94,26 +94,26 @@ char *get_string(char *prompt)
 	return str;
 }
 
-/* 
+/*
  * get_int: provides validated integer input to the user. It will keep
  * asking for input until the provided input is a valid integer.
  */
 int get_int(char *prompt)
 {
 	long int number;
-	errno = 0;
 	char *input;
 	char *endptr;
 	do
 	{
+		errno = 0;
 		if (prompt)
 		{
 			printf("%s", prompt);
 		}
 		input = get_string("");
 		number = strtol(input, &endptr, 10);
-	} while (errno == ERANGE || number == LONG_MAX || number == LONG_MIN || endptr == input ||
-	         number > INT_MAX || number < INT_MIN || *endptr != '\0' || isdigit(*input - '0') == 0);
+	} while (0 != errno || number > INT_MAX || number < INT_MIN || endptr == input ||
+	         *endptr != '\0' || ((*input < '0' || *input > '9') && (*input != '+' && *input != '-')));
 
 	return (int)number;
 }
