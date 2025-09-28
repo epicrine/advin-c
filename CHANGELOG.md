@@ -8,7 +8,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- get_int() to take integer input safely (by ensuring its strictly an integer)
 
 ## [0.1.0] - 2025-09-28
 
@@ -16,4 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Prototypes to advin.h
 - Makefile
-- `get_string()`'s first implementation with dynamic memory allocation with guardrails ensuring safe string input.
+- `get_string()`'s first implementation with dynamic memory allocation with guardrails ensuring safe string input is provided to the user.
+
+## [0.2.0] - 2025-09-28
+
+### Added
+- `get_int()` to provide validated integer input to the user.
