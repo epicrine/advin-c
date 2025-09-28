@@ -21,3 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - `get_int()` to provide validated integer input to the user.
+
+## [0.2.1] - 2025-09-28
+
+### Fixed
+- `get_int()`'s wrong validation leading to not providing input even if it is right.
