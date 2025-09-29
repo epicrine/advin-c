@@ -39,3 +39,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 - `get_byte()`'s prototype was removed from advin.h because it is an redundan type.
+
+## [1.0.0] - 2025-09-30
+
+### Added
+- `get_char()`'s first implementation
+- `get_long_long()`'s first implementation
+- `get_long()`'s first implementation
+- `get_long_long_uint()`'s first implementation
+- `get_long_uint()`'s first implementation
+- `get_short_uint()` prototype to advin.h
+- `get_short()`'s first implementation
+- `get_float()`'s first implementation
+- `get_double()`'s first implementation
+- `get_long_double()`'s first implementation
+
+### Changed
+- `get_long` to use `get_long_long()` (to remove redundancy and develop efficiently)
+- `get_int()` to use `get_long_long()` (to remove redundancy and develop efficiently)
+- `get_long_uint` to use `get_long_long_uint()` (to remove redundancy and develop efficiently)
+- `get_uint` to use `get_long_long_uint()` (to remove redundancy and develop efficiently)

@@ -22,13 +22,14 @@
  * Created: 2025
  */
 #include "advin.h"
-#include <ctype.h>
 #include <errno.h>
 #include <float.h>
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+/* STRING AND CHARACTEr */
 
 /*
  * get_string: provides string input to the user safely. The safety
@@ -95,6 +96,65 @@ char *get_string(char *prompt)
 }
 
 /*
+ * get_char: provides char to the user.
+ */
+char get_char(char *prompt)
+{
+	if (prompt)
+	{
+		printf("%s", prompt);
+	}
+
+	char c = getchar();
+
+	return c;
+}
+
+/* END */
+
+/* INTEGER RELATED TYPES */
+
+/*
+ * get_long_long: provides long long int input to the user, any upfront
+ * white spaces handeling is not done by the library.
+ */
+long long int get_long_long(char *prompt)
+{
+	long long int number;
+	int invalid;
+	char *input;
+	char *endptr;
+	do
+	{
+		input = get_string(prompt);
+		endptr = NULL;
+		errno = 0;
+		number = strtoll(input, &endptr, 10);
+		invalid = (errno != 0 || errno == ERANGE || *endptr != '\0' || endptr == input ||
+		           ((*input < '0' || *input > '9') && *input != '+' && *input != '-'));
+
+		free(input);
+	} while (invalid);
+
+	return number;
+}
+
+/*
+ * get_long: provides long int input to the user, any upfront
+ * white spaces handeling is not done by the library.
+ */
+long int get_long(char *prompt)
+{
+	long long int number;
+	do
+	{
+		number = get_long_long(prompt);
+	} while (number > LONG_MAX || number < LONG_MIN);
+
+	return number;
+}
+
+/*
  * get_int: provides validated integer input to the user. It will keep
  * asking for input until the provided input is a valid integer.
  * Any white spaces should be handeled beforehand as the spirit of
@@ -103,56 +163,140 @@ char *get_string(char *prompt)
  */
 int get_int(char *prompt)
 {
-	long int number;
+	long long int number;
+	do
+	{
+		number = get_long_long(prompt);
+	} while (number > INT_MAX || number < INT_MIN);
+
+	return number;
+}
+
+/* END */
+
+/* UNSIGNED INTEGER RELATED TYPES */
+
+/*
+ * get_long_long_uint: provides long long unsigned integer input to the
+ * user, any upfront white space handeling will not be done by the
+ * library.
+ */
+unsigned long long int get_long_long_uint(char *prompt)
+{
+	unsigned long long int number;
 	char *input;
 	char *endptr;
 	int valid;
 	do
 	{
+		input = get_string(prompt);
+		endptr = NULL;
 		errno = 0;
-		if (prompt)
-		{
-			printf("%s", prompt);
-		}
-		input = get_string("");
-		number = strtol(input, &endptr, 10);
-		valid = (0 != errno || number > INT_MAX || number < INT_MIN || endptr == input ||
-		         *endptr != '\0' ||
-		         ((*input < '0' || *input > '9') && (*input != '+' && *input != '-')));
+		number = strtoull(input, &endptr, 10);
+		valid = (0 != errno || errno == ERANGE || number > ULLONG_MAX || number < 0 ||
+		         endptr == input || *endptr != '\0' ||
+		         ((*input < '0' || *input > '9') && (*input != '+')));
 
 		free(input);
 
 	} while (valid);
 
-	return (int)number;
+	return number;
 }
 
 /*
- * get_uint: provides unsigned integer input to the user, any upfront
- * white space handeling will not be done by the library,
+ * get_long_uint: provides long unsigned integer input to the user, any up
+ * front white space handeling will not be done by the library.
+ */
+unsigned long int get_long_uint(char *prompt)
+{
+	unsigned long long int number;
+	do
+	{
+		number = get_long_long(prompt);
+	} while (number > ULONG_MAX || number < 0);
+
+	return number;
+}
+
+/*
+ * get_uint: provides unsigned integer input to the user, any up
+ * front white space handeling will not be done by the library.
  */
 unsigned int get_uint(char *prompt)
 {
-	long int number;
-	char *input;
-	char *endptr;
-	int valid;
+	unsigned long long int number;
 	do
 	{
+		number = get_long_long(prompt);
+	} while (number > UINT_MAX || number < 0);
+
+	return number;
+}
+
+/* END */
+
+/* FLOATING POINT INTEGER RELATED TYPES */
+
+/*
+ * get_long_double: provides long double input to the user, any up
+ * front white space handeling will not be done by the library.
+ */
+long double get_long_double(char *prompt)
+{
+	long double number;
+	char *input;
+	char *endptr;
+	do
+	{
+		input = get_string(prompt);
+		endptr = NULL;
 		errno = 0;
-		if (prompt)
-		{
-			printf("%s", prompt);
-		}
-		input = get_string("");
-		number = strtoul(input, &endptr, 10);
-		valid =
-		    (0 != errno || number > UINT_MAX || number < 0 || endptr == input || *endptr != '\0' ||
-		     ((*input < '0' || *input > '9') && (*input != '+' && *input != '-')));
+		number = strtold(input, &endptr);
+	} while (errno != 0 || errno == ERANGE || endptr == input || *endptr != '\0' ||
+	         ((*input < '0' || *input > '9') && *input != '+' && *input != '-'));
 
-		free(input);
+	return number;
+}
 
-	} while (valid);
+/*
+ * get_double: provides double input to the user, any up
+ * front white space handeling will not be done by the library.
+ */
+double get_double(char *prompt)
+{
+	double number;
+	char *input;
+	char *endptr;
+	do
+	{
+		input = get_string(prompt);
+		endptr = NULL;
+		errno = 0;
+		number = strtod(input, &endptr);
+	} while (errno != 0 || errno == ERANGE || endptr == input || *endptr != '\0' ||
+	         ((*input < '0' || *input > '9') && *input != '+' && *input != '-'));
+
+	return number;
+}
+
+/*
+ * get_float: provides floating point number input to the user, any up
+ * front white space handeling will not be done by the library.
+ */
+float get_float(char *prompt)
+{
+	long double number;
+	char *input;
+	char *endptr;
+	do
+	{
+		input = get_string(prompt);
+		endptr = NULL;
+		errno = 0;
+		number = strtof(input, &endptr);
+	} while (errno != 0 || errno == ERANGE || endptr == input || *endptr != '\0' ||
+	         ((*input < '0' || *input > '9') && *input != '+' && *input != '-'));
 
 	return number;
 }
