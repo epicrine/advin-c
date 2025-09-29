@@ -31,3 +31,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - `get_int()`'s memory issue where it didn't free the input variable containing the input in string format.
+
+## [0.3.0] - 2025-09-30
+
+### Added
+- `get_uint()`'s first implementation to provide users validated unsigned integer input.
+
+### Removed
+- `get_byte()`'s prototype was removed from advin.h because it is an redundan type.

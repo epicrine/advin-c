@@ -28,8 +28,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-uint8_t get_byte(char *prompt);
-
 unsigned int get_uint(char *prompt);
 
 short get_short(char *prompt);

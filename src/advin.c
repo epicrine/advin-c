@@ -97,6 +97,9 @@ char *get_string(char *prompt)
 /*
  * get_int: provides validated integer input to the user. It will keep
  * asking for input until the provided input is a valid integer.
+ * Any white spaces should be handeled beforehand as the spirit of
+ * this library is to only provide input exactly of the relevant
+ * type, without doing any special handeling of the input.
  */
 int get_int(char *prompt)
 {
@@ -122,4 +125,34 @@ int get_int(char *prompt)
 	} while (valid);
 
 	return (int)number;
+}
+
+/*
+ * get_uint: provides unsigned integer input to the user, any upfront
+ * white space handeling will not be done by the library,
+ */
+unsigned int get_uint(char *prompt)
+{
+	long int number;
+	char *input;
+	char *endptr;
+	int valid;
+	do
+	{
+		errno = 0;
+		if (prompt)
+		{
+			printf("%s", prompt);
+		}
+		input = get_string("");
+		number = strtoul(input, &endptr, 10);
+		valid =
+		    (0 != errno || number > UINT_MAX || number < 0 || endptr == input || *endptr != '\0' ||
+		     ((*input < '0' || *input > '9') && (*input != '+' && *input != '-')));
+
+		free(input);
+
+	} while (valid);
+
+	return number;
 }

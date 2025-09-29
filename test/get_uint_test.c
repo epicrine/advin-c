@@ -4,7 +4,7 @@
 int main(void)
 {
 	printf("------------- TESTING -------------\n");
-	int input = get_int("Number: ");
+	unsigned int input = get_uint("Number: ");
 
-	printf("Number: %i\n", input);
+	printf("Number: %u\n", input);
 }
