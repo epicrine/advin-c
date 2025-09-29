@@ -28,10 +28,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-unsigned long long int get_long_long_uint(char *prompt);
-unsigned long int get_long_uint(char *prompt);
+unsigned long long get_long_long_uint(char *prompt);
+unsigned long get_long_uint(char *prompt);
 unsigned int get_uint(char *prompt);
-short unsigned int get_short_uint(char *prompt);
+unsigned short get_short_uint(char *prompt);
 
 long long get_long_long(char *prompt);
 long get_long(char *prompt);
@@ -42,8 +42,7 @@ float get_float(char *prompt);
 double get_double(char *prompt);
 long double get_long_double(char *prompt);
 
-char get_char(char *prompt);
-
 char *get_string(char *prompt);
+char get_char(char *prompt);
 
 #endif

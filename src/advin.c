@@ -118,9 +118,9 @@ char get_char(char *prompt)
  * get_long_long: provides long long int input to the user, any upfront
  * white spaces handeling is not done by the library.
  */
-long long int get_long_long(char *prompt)
+long long get_long_long(char *prompt)
 {
-	long long int number;
+	long long number;
 	int invalid;
 	char *input;
 	char *endptr;
@@ -143,9 +143,9 @@ long long int get_long_long(char *prompt)
  * get_long: provides long int input to the user, any upfront
  * white spaces handeling is not done by the library.
  */
-long int get_long(char *prompt)
+long get_long(char *prompt)
 {
-	long long int number;
+	long long number;
 	do
 	{
 		number = get_long_long(prompt);
@@ -163,11 +163,22 @@ long int get_long(char *prompt)
  */
 int get_int(char *prompt)
 {
-	long long int number;
+	long number;
 	do
 	{
-		number = get_long_long(prompt);
+		number = get_long(prompt);
 	} while (number > INT_MAX || number < INT_MIN);
+
+	return number;
+}
+
+short int get_short(char *prompt)
+{
+	int number;
+	do
+	{
+		number = get_int(prompt);
+	} while (number > SHRT_MAX || number < SHRT_MIN);
 
 	return number;
 }
@@ -181,9 +192,9 @@ int get_int(char *prompt)
  * user, any upfront white space handeling will not be done by the
  * library.
  */
-unsigned long long int get_long_long_uint(char *prompt)
+unsigned long long get_long_long_uint(char *prompt)
 {
-	unsigned long long int number;
+	unsigned long long number;
 	char *input;
 	char *endptr;
 	int valid;
@@ -208,12 +219,12 @@ unsigned long long int get_long_long_uint(char *prompt)
  * get_long_uint: provides long unsigned integer input to the user, any up
  * front white space handeling will not be done by the library.
  */
-unsigned long int get_long_uint(char *prompt)
+unsigned long get_long_uint(char *prompt)
 {
-	unsigned long long int number;
+	unsigned long long number;
 	do
 	{
-		number = get_long_long(prompt);
+		number = get_long_long_uint(prompt);
 	} while (number > ULONG_MAX || number < 0);
 
 	return number;
@@ -225,11 +236,22 @@ unsigned long int get_long_uint(char *prompt)
  */
 unsigned int get_uint(char *prompt)
 {
-	unsigned long long int number;
+	unsigned long long number;
 	do
 	{
-		number = get_long_long(prompt);
+		number = get_long_uint(prompt);
 	} while (number > UINT_MAX || number < 0);
+
+	return number;
+}
+
+unsigned short get_short_uint(char *prompt)
+{
+	unsigned int number;
+	do
+	{
+		number = get_uint(prompt);
+	} while (number > USHRT_MAX || number < 0);
 
 	return number;
 }
