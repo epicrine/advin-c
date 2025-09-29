@@ -300,3 +300,5 @@ float get_float(char *prompt)
 
 	return number;
 }
+
+/* END */
