@@ -26,3 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - `get_int()`'s wrong validation leading to not providing input even if it is right.
+
+## [0.2.2] - 2025-09-29
+
+### Fixed
+- `get_int()`'s memory issue where it didn't free the input variable containing the input in string format.

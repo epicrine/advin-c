@@ -103,6 +103,7 @@ int get_int(char *prompt)
 	long int number;
 	char *input;
 	char *endptr;
+	int valid;
 	do
 	{
 		errno = 0;
@@ -112,8 +113,13 @@ int get_int(char *prompt)
 		}
 		input = get_string("");
 		number = strtol(input, &endptr, 10);
-	} while (0 != errno || number > INT_MAX || number < INT_MIN || endptr == input ||
-	         *endptr != '\0' || ((*input < '0' || *input > '9') && (*input != '+' && *input != '-')));
+		valid = (0 != errno || number > INT_MAX || number < INT_MIN || endptr == input ||
+		         *endptr != '\0' ||
+		         ((*input < '0' || *input > '9') && (*input != '+' && *input != '-')));
+
+		free(input);
+
+	} while (valid);
 
 	return (int)number;
 }
